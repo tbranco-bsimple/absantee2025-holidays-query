@@ -72,7 +72,8 @@ builder.Services.AddMassTransit(x =>
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("rabbitmq://localhost");
-        cfg.ReceiveEndpoint("holidays-query", e =>
+        var uniqueQueueName = $"holidays-query-{Guid.NewGuid():N}";
+        cfg.ReceiveEndpoint(uniqueQueueName, e =>
         {
             e.ConfigureConsumer<HolidayPeriodConsumer>(context);
             e.ConfigureConsumer<HolidayPlanConsumer>(context);

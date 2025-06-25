@@ -10,6 +10,7 @@ public class AssociationProjectCollaboratorConsumer : IConsumer<AssociationProje
     {
         _associationService = associationService;
     }
+
     public async Task Consume(ConsumeContext<AssociationProjectCollaboratorMessage> context)
     {
         var senderId = context.Headers.Get<string>("SenderId");
