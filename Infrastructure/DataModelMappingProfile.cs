@@ -21,6 +21,10 @@ public class DataModelMappingProfile : Profile
         CreateMap<HolidayPeriod, HolidayPeriodDataModel>();
         CreateMap<HolidayPeriodDataModel, HolidayPeriod>()
             .ConvertUsing<HolidayPeriodDataModelConverter>();
+
+        CreateMap<AssociationProjectCollaborator, AssociationProjectCollaboratorDataModel>();
+        CreateMap<AssociationProjectCollaboratorDataModel, AssociationProjectCollaborator>()
+            .ConvertUsing<AssociationProjectCollaboratorDataModelConverter>();
     }
 
 }

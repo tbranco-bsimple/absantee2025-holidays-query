@@ -18,13 +18,13 @@ public class AssociationProjectCollaboratorService
         _associationProjectCollaboratorFactory = associationProjectCollaboratorFactory;
     }
 
-    public async Task SubmitAssociationProjCollabAsync(Guid id, Guid collaboratorId, Guid projectId, PeriodDate periodDate)
+    public async Task SubmitAssociationProjCollabAsync(Guid id, Guid projectId, Guid collaboratorId, PeriodDate periodDate)
     {
         var visitor = new AssociationProjectCollaboratorDataModel()
         {
             Id = id,
-            CollaboratorId = collaboratorId,
             ProjectId = projectId,
+            CollaboratorId = collaboratorId,
             PeriodDate = periodDate
         };
 

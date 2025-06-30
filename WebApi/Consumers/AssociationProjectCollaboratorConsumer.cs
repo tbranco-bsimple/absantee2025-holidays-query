@@ -2,7 +2,7 @@ using Application.Services;
 using Domain.Messages;
 using MassTransit;
 
-public class AssociationProjectCollaboratorConsumer : IConsumer<AssociationProjectCollaboratorMessage>
+public class AssociationProjectCollaboratorConsumer : IConsumer<AssociationProjectCollaboratorCreatedMessage>
 {
     private readonly AssociationProjectCollaboratorService _associationService;
 
@@ -11,13 +11,13 @@ public class AssociationProjectCollaboratorConsumer : IConsumer<AssociationProje
         _associationService = associationService;
     }
 
-    public async Task Consume(ConsumeContext<AssociationProjectCollaboratorMessage> context)
+    public async Task Consume(ConsumeContext<AssociationProjectCollaboratorCreatedMessage> context)
     {
         var senderId = context.Headers.Get<string>("SenderId");
         if (senderId == InstanceInfo.InstanceId)
             return;
 
         var msg = context.Message;
-        await _associationService.SubmitAssociationProjCollabAsync(msg.Id, msg.CollaboratorId, msg.ProjectId, msg.PeriodDate);
+        await _associationService.SubmitAssociationProjCollabAsync(msg.Id, msg.ProjectId, msg.CollaboratorId, msg.PeriodDate);
     }
 }

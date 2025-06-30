@@ -10,10 +10,8 @@ namespace Application.DTO
     public record AssociationProjectCollaboratorDTO
     {
         public Guid Id { get; set; }
-        public Guid CollaboratorId { get; set; }
-        public string? CollaboratorEmail { get; set; }
         public Guid ProjectId { get; set; }
-        public string? ProjectAcronym { get; set; }
+        public Guid CollaboratorId { get; set; }
         public PeriodDate PeriodDate { get; set; }
     }
 }

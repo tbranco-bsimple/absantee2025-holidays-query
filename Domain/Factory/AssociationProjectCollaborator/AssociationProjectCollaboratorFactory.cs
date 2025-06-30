@@ -14,8 +14,9 @@ public class AssociationProjectCollaboratorFactory : IAssociationProjectCollabor
     public AssociationProjectCollaborator Create(IAssociationProjectCollaboratorVisitor associationProjectCollaboratorVisitor)
     {
         return new AssociationProjectCollaborator(
-                    associationProjectCollaboratorVisitor.CollaboratorId,
+                    associationProjectCollaboratorVisitor.Id,
                     associationProjectCollaboratorVisitor.ProjectId,
+                    associationProjectCollaboratorVisitor.CollaboratorId,
                     associationProjectCollaboratorVisitor.PeriodDate);
     }
 }
