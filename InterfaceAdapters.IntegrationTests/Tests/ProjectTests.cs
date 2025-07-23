@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 using Xunit;
 using Application.DTO;
 using Domain.Models;
-using WebApi.IntegrationTests.Helpers;
+using InterfaceAdapters.IntegrationTests.Helpers;
 using Domain.Interfaces;
 using System.Net;
 using Application.DTO.Collaborators;
 
-namespace WebApi.IntegrationTests.Tests;
+namespace InterfaceAdapters.IntegrationTests.Tests;
 
 public class ProjectControllerTests : IntegrationTestBase, IClassFixture<IntegrationTestsWebApplicationFactory<Program>>
 {
@@ -193,10 +193,11 @@ public class ProjectControllerTests : IntegrationTestBase, IClassFixture<Integra
         var createdAssociationDTO = await PostAndDeserializeAsync<AssociationProjectCollaboratorDTO>($"/api/Project/{projectCreatedDTO.Id}/collaborators", associationDTO);
 
         //Create Holiday Plan with HolidayPeriods
-        var holidayPeriod1 = new CreateHolidayPeriodDTO() {
+        var holidayPeriod1 = new CreateHolidayPeriodDTO()
+        {
             InitDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(1)),
             FinalDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(1)).AddDays(5)
-            };
+        };
 
         var holidayPeriod2 = new CreateHolidayPeriodDTO()
         {

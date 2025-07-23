@@ -3,7 +3,7 @@ using Application.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers;
+namespace InterfaceAdapters.Controllers;
 
 [Route("api/holidays")]
 [ApiController]

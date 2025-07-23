@@ -29,6 +29,14 @@ public class HolidayPlanService
 
     public async Task SubmitHolidayPlanAsync(Guid id, Guid collabId, List<HolidayPeriod> holidayPeriods)
     {
+        var holidayPlan = await _holidayPlanRepository.GetByIdAsync(id);
+
+        if (holidayPlan != null)
+        {
+            Console.WriteLine($"HolidayPlanConsumed not added, already exists with Id: {id}");
+            return;
+        }
+
         var holidayPeriodsDataModel = _mapper.Map<List<HolidayPeriod>, List<HolidayPeriodDataModel>>(holidayPeriods);
         var visitor = new HolidayPlanDataModel()
         {
@@ -37,20 +45,28 @@ public class HolidayPlanService
             HolidayPeriods = holidayPeriodsDataModel
         };
 
-        var holidayPlan = _holidayPlanFactory.Create(visitor);
+        holidayPlan = _holidayPlanFactory.Create(visitor);
 
         await _holidayPlanRepository.AddAsync(holidayPlan);
     }
 
     public async Task SubmitHolidayPeriodAsync(Guid holidayPlanId, Guid id, PeriodDate periodDate)
     {
+        var holidayPeriod = await _holidayPlanRepository.GetHolidayPeriodByIdAsync(id);
+
+        if (holidayPeriod != null)
+        {
+            Console.WriteLine($"HolidayPeriodConsumed not added, already exists with Id: {id}");
+            return;
+        }
+
         var visitor = new HolidayPeriodDataModel()
         {
             Id = id,
             PeriodDate = periodDate
         };
 
-        var holidayPeriod = _holidayPeriodFactory.Create(visitor);
+        holidayPeriod = _holidayPeriodFactory.Create(visitor);
 
         await _holidayPlanRepository.AddHolidayPeriodAsync(holidayPlanId, holidayPeriod);
         await _holidayPlanRepository.SaveChangesAsync();

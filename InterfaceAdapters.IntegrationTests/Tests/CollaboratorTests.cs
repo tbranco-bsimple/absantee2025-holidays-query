@@ -3,10 +3,10 @@ using Application.DTO.Collaborators;
 using Domain.Interfaces;
 using Domain.Models;
 using System.Net;
-using WebApi.IntegrationTests.Helpers;
+using InterfaceAdapters.IntegrationTests.Helpers;
 using Xunit;
 
-namespace WebApi.IntegrationTests.Tests;
+namespace InterfaceAdapters.IntegrationTests.Tests;
 
 
 
