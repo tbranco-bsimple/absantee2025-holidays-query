@@ -5,10 +5,11 @@ using Application.DTO;
 using AutoMapper;
 using Domain.Factory;
 using Infrastructure.DataModel;
+using Application.IServices;
 
 namespace Application.Services;
 
-public class HolidayPlanService
+public class HolidayPlanService : IHolidayPlanService
 {
     private readonly IHolidayPlanRepository _holidayPlanRepository;
     private readonly IHolidayPlanFactory _holidayPlanFactory;
@@ -27,7 +28,7 @@ public class HolidayPlanService
         _mapper = mapper;
     }
 
-    public async Task SubmitHolidayPlanAsync(Guid id, Guid collabId, List<HolidayPeriod> holidayPeriods)
+    public async Task AddConsumedHolidayPlan(Guid id, Guid collabId, List<HolidayPeriod> holidayPeriods)
     {
         var holidayPlan = await _holidayPlanRepository.GetByIdAsync(id);
 
@@ -50,7 +51,7 @@ public class HolidayPlanService
         await _holidayPlanRepository.AddAsync(holidayPlan);
     }
 
-    public async Task SubmitHolidayPeriodAsync(Guid holidayPlanId, Guid id, PeriodDate periodDate)
+    public async Task AddConsumedHolidayPeriod(Guid holidayPlanId, Guid id, PeriodDate periodDate)
     {
         var holidayPeriod = await _holidayPlanRepository.GetHolidayPeriodByIdAsync(id);
 
@@ -69,7 +70,21 @@ public class HolidayPlanService
         holidayPeriod = _holidayPeriodFactory.Create(visitor);
 
         await _holidayPlanRepository.AddHolidayPeriodAsync(holidayPlanId, holidayPeriod);
-        await _holidayPlanRepository.SaveChangesAsync();
+    }
+
+    public async Task UpdateConsumedHolidayPeriod(Guid id, PeriodDate periodDate)
+    {
+        var holidayPeriod = await _holidayPlanRepository.GetHolidayPeriodByIdAsync(id);
+
+        if (holidayPeriod == null)
+        {
+            Console.WriteLine($"HolidayPeriodConsumed not updated, does not exist with Id: {id}");
+            return;
+        }
+
+        var period = new HolidayPeriod(id, periodDate);
+
+        await _holidayPlanRepository.UpdateHolidayPeriodAsync(id, period);
     }
 
     public async Task<IEnumerable<HolidayPeriodDTO>> FindHolidayPeriodForCollaborator(Guid collaboratorId)

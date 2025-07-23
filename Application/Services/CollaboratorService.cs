@@ -1,12 +1,12 @@
 using Domain.IRepository;
-using AutoMapper;
 using Domain.Factory;
 using Domain.Models;
 using Infrastructure.DataModel;
+using Application.IServices;
 
 namespace Application.Services;
 
-public class CollaboratorService
+public class CollaboratorService : ICollaboratorService
 {
     private readonly ICollaboratorRepository _collaboratorRepository;
     private readonly ICollaboratorFactory _collaboratorFactory;
@@ -17,7 +17,7 @@ public class CollaboratorService
         _collaboratorFactory = collaboratorFactory;
     }
 
-    public async Task SubmitCollaboratorAsync(Guid id, PeriodDateTime periodDateTime)
+    public async Task AddConsumedCollaborator(Guid id, PeriodDateTime periodDateTime)
     {
         var visitor = new CollaboratorDataModel()
         {

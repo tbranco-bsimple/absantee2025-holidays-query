@@ -9,7 +9,7 @@ public interface IHolidayPlanRepository : IGenericRepositoryEF<IHolidayPlan, Hol
     public Task<bool> CanInsertHolidayPlan(Guid collaboratorId);
     public Task<bool> CanInsertHolidayPeriod(Guid holidayPlanId, HolidayPeriod periodDate);
     public Task<HolidayPeriod> AddHolidayPeriodAsync(Guid holidayPlanId, HolidayPeriod holidayPeriod);
-    public Task<HolidayPeriod> UpdateHolidayPeriodAsync(Guid collabId, HolidayPeriod holidayPeriod);
+    public Task<HolidayPeriod> UpdateHolidayPeriodAsync(Guid holidayPeriodId, HolidayPeriod holidayPeriod);
     public Task<HolidayPeriod?> GetHolidayPeriodByIdAsync(Guid holidayPeriodId);
     public Task<IEnumerable<HolidayPeriod>> FindHolidayPeriodsByCollaboratorBetweenDatesAsync(Guid collaboratorId, PeriodDate periodDate);
     public Task<IEnumerable<IHolidayPlan>> FindHolidayPlansWithinPeriodAsync(PeriodDate periodDate);

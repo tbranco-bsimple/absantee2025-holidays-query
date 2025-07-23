@@ -1,5 +1,5 @@
 ﻿using Application.DTO;
-using Application.Services;
+using Application.IServices;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +9,9 @@ namespace InterfaceAdapters.Controllers;
 [ApiController]
 public class HolidayPlanController : Controller
 {
-    private readonly HolidayPlanService _holidayPlanService;
+    private readonly IHolidayPlanService _holidayPlanService;
 
-    public HolidayPlanController(HolidayPlanService holidayPlanService)
+    public HolidayPlanController(IHolidayPlanService holidayPlanService)
     {
         _holidayPlanService = holidayPlanService;
     }

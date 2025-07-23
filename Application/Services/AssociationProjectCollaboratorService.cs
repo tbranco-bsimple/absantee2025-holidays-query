@@ -1,13 +1,12 @@
 ﻿using Domain.Factory;
 using Domain.Models;
 using Domain.IRepository;
-using AutoMapper;
-using Application.DTO;
 using Infrastructure.DataModel;
+using Application.IServices;
 
 namespace Application.Services;
 
-public class AssociationProjectCollaboratorService
+public class AssociationProjectCollaboratorService : IAssociationProjectCollaboratorService
 {
     private IAssociationProjectCollaboratorRepository _assocRepository;
     private IAssociationProjectCollaboratorFactory _associationProjectCollaboratorFactory;
@@ -18,7 +17,7 @@ public class AssociationProjectCollaboratorService
         _associationProjectCollaboratorFactory = associationProjectCollaboratorFactory;
     }
 
-    public async Task SubmitAssociationProjCollabAsync(Guid id, Guid projectId, Guid collaboratorId, PeriodDate periodDate)
+    public async Task AddConsumedAssociationProjCollab(Guid id, Guid projectId, Guid collaboratorId, PeriodDate periodDate)
     {
         var visitor = new AssociationProjectCollaboratorDataModel()
         {

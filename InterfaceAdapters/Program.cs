@@ -8,6 +8,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Resolvers;
 using Microsoft.EntityFrameworkCore;
 using MassTransit;
+using Application.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var environment = builder.Environment.EnvironmentName;
@@ -27,9 +28,9 @@ builder.Services.AddDbContext<AbsanteeContext>(opt =>
     );
 
 //Services
-builder.Services.AddTransient<HolidayPlanService>();
-builder.Services.AddTransient<CollaboratorService>();
-builder.Services.AddTransient<AssociationProjectCollaboratorService>();
+builder.Services.AddTransient<IHolidayPlanService, HolidayPlanService>();
+builder.Services.AddTransient<ICollaboratorService, CollaboratorService>();
+builder.Services.AddTransient<IAssociationProjectCollaboratorService, AssociationProjectCollaboratorService>();
 
 //Repositories
 builder.Services.AddTransient<IHolidayPlanRepository, HolidayPlanRepositoryEF>();
@@ -71,10 +72,11 @@ builder.Services.AddAutoMapper(cfg =>
 // MassTransit
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<HolidayPeriodConsumer>();
-    x.AddConsumer<HolidayPlanConsumer>();
-    x.AddConsumer<CollaboratorConsumer>();
-    x.AddConsumer<AssociationProjectCollaboratorConsumer>();
+    x.AddConsumer<HolidayPeriodCreatedConsumer>();
+    x.AddConsumer<HolidayPeriodUpdatedConsumer>();
+    x.AddConsumer<HolidayPlanCreatedConsumer>();
+    x.AddConsumer<CollaboratorCreatedConsumer>();
+    x.AddConsumer<AssociationProjectCollaboratorCreatedConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -82,10 +84,11 @@ builder.Services.AddMassTransit(x =>
         var instance = InstanceInfo.InstanceId;
         cfg.ReceiveEndpoint($"holidays-query-{instance}", e =>
         {
-            e.ConfigureConsumer<HolidayPeriodConsumer>(context);
-            e.ConfigureConsumer<HolidayPlanConsumer>(context);
-            e.ConfigureConsumer<CollaboratorConsumer>(context);
-            e.ConfigureConsumer<AssociationProjectCollaboratorConsumer>(context);
+            e.ConfigureConsumer<HolidayPeriodCreatedConsumer>(context);
+            e.ConfigureConsumer<HolidayPeriodUpdatedConsumer>(context);
+            e.ConfigureConsumer<HolidayPlanCreatedConsumer>(context);
+            e.ConfigureConsumer<CollaboratorCreatedConsumer>(context);
+            e.ConfigureConsumer<AssociationProjectCollaboratorCreatedConsumer>(context);
         });
     });
 });
